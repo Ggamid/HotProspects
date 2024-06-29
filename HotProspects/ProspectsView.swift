@@ -16,6 +16,7 @@ struct ProspectsView: View {
     
     @State var isShowingScanner = false
     
+    @State private var selectedProspects = Set<Prospect>()
     
     enum FilterType {
         case none, contacted, uncontacted
@@ -36,23 +37,59 @@ struct ProspectsView: View {
     
     var body: some View {
         NavigationStack {
-            List(prospects) { prospect in
+            List(prospects, selection: $selectedProspects) { prospect in
                 VStack(alignment: .leading) {
                     Text(prospect.name)
                         .font(.headline)
                     Text(prospect.emailAddress)
                         .foregroundStyle(.secondary)
                 }
+                .swipeActions {
+                    
+                    Button("Delete", systemImage: "trash") {
+                        modelContext.delete(prospect)
+                    }
+                    .tint(.red)
+                    
+                    if prospect.isContacted {
+                        Button("Mark Uncontacted", systemImage: "person.crop.circle.badge.xmark") {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.blue)
+                    } else {
+                        Button("Mark Contacted", systemImage: "person.crop.circle.fill.badge.checkmark") {
+                            prospect.isContacted.toggle()
+                        }
+                        .tint(.green)
+                    }
+                }
+                .tag(prospect)
             }
             .navigationTitle(title)
             .toolbar {
-                Button("Scan", systemImage: "qrcode.viewfinder") {
-                    isShowingScanner = true
+                
+                ToolbarItem(placement: .topBarTrailing){
+                    Button("Scan", systemImage: "qrcode.viewfinder") {
+                        isShowingScanner = true
+                    }
                 }
-                .sheet(isPresented: $isShowingScanner){
-                    CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan(result:))
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    EditButton()
                 }
+                
+                if selectedProspects.isEmpty == false {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button("Delete selected", role: .destructive, action: delete)
+                    }
+                }
+                
             }
+            .sheet(isPresented: $isShowingScanner){
+                CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan(result:))
+            }
+            
+            
         }
     }
     
@@ -85,6 +122,14 @@ struct ProspectsView: View {
             print("something went wrong \(failure.localizedDescription)")
         }
     }
+    
+    func delete() {
+        for selectedProspect in selectedProspects {
+            modelContext.delete(selectedProspect)
+        }
+    }
+    
+    
 }
 
 #Preview {

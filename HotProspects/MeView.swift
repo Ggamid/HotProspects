@@ -24,6 +24,7 @@ struct MeView: View {
             TextField("Email", text: $emailAddress)
                 .font(.title2)
                 .textContentType(.emailAddress)
+                .textInputAutocapitalization(.never)
             
             Image(uiImage: generateQRCode(frome: "\(name)\n\(emailAddress)"))
                 .interpolation(.none)
