@@ -38,19 +38,25 @@ struct ProspectsView: View {
     var body: some View {
         NavigationStack {
             List(prospects, selection: $selectedProspects) { prospect in
-                HStack{
-                    VStack(alignment: .leading) {
-                        Text(prospect.name)
-                            .font(.headline)
-                        Text(prospect.emailAddress)
-                            .foregroundStyle(.secondary)
-                    }
-                    Spacer()
-                    if filter == .none{
-                        Image(systemName: prospect.isContacted ? "phone.circle.fill" : "phone.circle")
-                            .font(.title)
+                NavigationLink {
+                    EditView(prospect: prospect)
+                } label: {
+                    HStack{
+                        VStack(alignment: .leading) {
+                            Text(prospect.name)
+                                .font(.headline)
+                            Text(prospect.emailAddress)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        if filter == .none{
+                            Image(systemName: prospect.isContacted ? "phone.circle.fill" : "phone.circle")
+                                .font(.title)
+                        }
                     }
                 }
+
+                
                 .swipeActions {
                     
                     Button("Delete", systemImage: "trash") {

@@ -15,6 +15,7 @@
 		876A1F602C2D957B007B5B1D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 876A1F5F2C2D957B007B5B1D /* Assets.xcassets */; };
 		876A1F632C2D957B007B5B1D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 876A1F622C2D957B007B5B1D /* Preview Assets.xcassets */; };
 		8775515B2C3072EC00876E6E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 8775515A2C3072EC00876E6E /* CodeScanner */; };
+		8794221C2C31BC47009CD324 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8794221B2C31BC47009CD324 /* EditView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		876A1F5D2C2D9579007B5B1D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		876A1F5F2C2D957B007B5B1D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		876A1F622C2D957B007B5B1D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8794221B2C31BC47009CD324 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				8769E41F2C2EEF120024D9B5 /* Prospect.swift */,
 				876A1F5D2C2D9579007B5B1D /* ContentView.swift */,
 				8769E41B2C2EED510024D9B5 /* ProspectsView.swift */,
+				8794221B2C31BC47009CD324 /* EditView.swift */,
 				8769E41D2C2EED580024D9B5 /* MeView.swift */,
 				876A1F5F2C2D957B007B5B1D /* Assets.xcassets */,
 				876A1F612C2D957B007B5B1D /* Preview Content */,
@@ -156,6 +159,7 @@
 			files = (
 				8769E41E2C2EED580024D9B5 /* MeView.swift in Sources */,
 				8769E4202C2EEF120024D9B5 /* Prospect.swift in Sources */,
+				8794221C2C31BC47009CD324 /* EditView.swift in Sources */,
 				8769E41C2C2EED510024D9B5 /* ProspectsView.swift in Sources */,
 				876A1F5E2C2D9579007B5B1D /* ContentView.swift in Sources */,
 				876A1F5C2C2D9579007B5B1D /* HotProspectsApp.swift in Sources */,
