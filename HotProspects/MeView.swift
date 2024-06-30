@@ -15,6 +15,8 @@ struct MeView: View {
     var context = CIContext()
     var filter = CIFilter.qrCodeGenerator()
     
+    @State var qrCode = UIImage()
+    
     var body: some View {
         Form {
             TextField("Name", text: $name)
@@ -26,13 +28,22 @@ struct MeView: View {
                 .textContentType(.emailAddress)
                 .textInputAutocapitalization(.never)
             
-            Image(uiImage: generateQRCode(frome: "\(name)\n\(emailAddress)"))
+            Image(uiImage: qrCode)
                 .interpolation(.none)
                 .resizable()
                 .scaledToFill()
+                .contextMenu(menuItems: {
+                    ShareLink(item: Image(uiImage: qrCode), preview: SharePreview("My QR code", image: Image(uiImage: qrCode)))
+                })
         }
+        .onAppear(perform: updateCode)
+        .onChange(of: emailAddress, updateCode)
+        .onChange(of: name, updateCode)
     }
     
+    func updateCode() {
+        qrCode = generateQRCode(frome: "\(name)\n\(emailAddress)")
+    }
     
     func generateQRCode(frome string: String) -> UIImage {
         filter.message = Data(string.utf8)
