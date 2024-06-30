@@ -38,11 +38,18 @@ struct ProspectsView: View {
     var body: some View {
         NavigationStack {
             List(prospects, selection: $selectedProspects) { prospect in
-                VStack(alignment: .leading) {
-                    Text(prospect.name)
-                        .font(.headline)
-                    Text(prospect.emailAddress)
-                        .foregroundStyle(.secondary)
+                HStack{
+                    VStack(alignment: .leading) {
+                        Text(prospect.name)
+                            .font(.headline)
+                        Text(prospect.emailAddress)
+                            .foregroundStyle(.secondary)
+                    }
+                    Spacer()
+                    if filter == .none{
+                        Image(systemName: prospect.isContacted ? "phone.circle.fill" : "phone.circle")
+                            .font(.title)
+                    }
                 }
                 .swipeActions {
                     
@@ -134,31 +141,31 @@ struct ProspectsView: View {
     }
     
     func addNotification(for prospect: Prospect) {
-        let center = UNUserNotificationCenter.current()
+        let center = UNUserNotificationCenter.current() // Создаем сущность UNUserNotificationCenter (центр уведомлений)
         
         let addRequest = {
-            let content = UNMutableNotificationContent()
+            let content = UNMutableNotificationContent() // Cоздаем сущность Для контента уведомления
             content.title = prospect.name
             content.subtitle = prospect.emailAddress
-            content.sound = UNNotificationSound.default
+            content.sound = UNNotificationSound.default // задаем контент для уведомления
             
 //            var dateComponents = DateComponents()
 //            dateComponents.hour = 9
-//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+//            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false) // указываем когда будет отправляться уведомление. в этом случае оно отправиться в 9 часов единожды
 //
-            var trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // Тестово задаем интервал в 5 секунд, для того чтобы уведомление пришло через 5 секунд после вызова функции
             
-            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            center.add(request)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger) // создаем NotificationRequest чтобы дальше передать его в центр уведомлений.
+            center.add(request) // Передаем запрос в центр уведомлений.
             
         }
         
-        center.getNotificationSettings { settings in
-            if settings.authorizationStatus == .authorized {
+        center.getNotificationSettings { settings in // проверяем текущие настройки уведомлений.
+            if settings.authorizationStatus == .authorized { // если текущее состояние настроек уведомлений позволяет отправить уведомление отправляем запрос в нотификейшн центр
                 addRequest()
-            } else {
-                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    if success {
+            } else { // если настройки не позволяют отправить уведомление то:
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in // просим пользователя дать разрешение на отправку уведомлений. указываем параметры .alert - запрос на отправку плашки, .badge - на отправку банера, .sound - запрос на уведомления со звуком.
+                    if success { // если пользователь дал доступ отправляем уведомление в центр
                         addRequest()
                     } else if let error {
                         print(error.localizedDescription)

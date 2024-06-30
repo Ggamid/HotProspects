@@ -45,12 +45,12 @@ struct MeView: View {
         qrCode = generateQRCode(frome: "\(name)\n\(emailAddress)")
     }
     
-    func generateQRCode(frome string: String) -> UIImage {
-        filter.message = Data(string.utf8)
+    func generateQRCode(frome string: String) -> UIImage { // string - передаем строку, которую хотим закодировать.
+        filter.message = Data(string.utf8) // в филтер передаем строку превращенную в тип Дата
         
-        if let outputImage = filter.outputImage {
-            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) {
-                return UIImage(cgImage: cgImage)
+        if let outputImage = filter.outputImage { // если получается вытащить изображение то:
+            if let cgImage = context.createCGImage(outputImage, from: outputImage.extent) { // берем outputImage и с помощью context создаем cg image
+                return UIImage(cgImage: cgImage) // ну и возвращаем картинку
             }
         }
         

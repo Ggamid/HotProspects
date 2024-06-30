@@ -14,5 +14,7 @@ struct HotProspectsApp: App {
             ContentView()
         }
         .modelContainer(for: Prospect.self)
+        // создать modelContainder для всего приложения, который будет
+        // хранить в себе объекты заданного класса.
     }
 }
