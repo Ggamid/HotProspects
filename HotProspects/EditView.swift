@@ -16,6 +16,7 @@ struct EditView: View {
             TextField(prospect.name, text: $prospect.name)
             TextField(prospect.emailAddress, text: $prospect.emailAddress)
             Toggle("is Contacted", isOn: $prospect.isContacted)
+            DatePicker("meet date", selection: $prospect.date)
         }
     }
 }

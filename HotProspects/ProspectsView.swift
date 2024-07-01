@@ -55,7 +55,6 @@ struct ProspectsView: View {
                         }
                     }
                 }
-
                 
                 .swipeActions {
                     
@@ -84,7 +83,6 @@ struct ProspectsView: View {
             }
             .navigationTitle(title)
             .toolbar {
-                
                 ToolbarItem(placement: .topBarTrailing){
                     Button("Scan", systemImage: "qrcode.viewfinder") {
                         isShowingScanner = true
@@ -105,8 +103,6 @@ struct ProspectsView: View {
             .sheet(isPresented: $isShowingScanner){
                 CodeScannerView(codeTypes: [.qr], simulatedData: "Paul Hudson\npaul@hackingwithswift.com", completion: handleScan(result:))
             }
-            
-            
         }
     }
     
